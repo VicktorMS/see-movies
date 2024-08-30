@@ -7,7 +7,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(
+    title=settings.PROJECT_NAME + " API",
+    description="API para consulta de filmes no site TMDB. Feita como uma Teste técnico para Verzel.",
+    version=settings.PROJECT_VERSION,
+)
 
 allow_origins = settings.BACKEND_CORS_ORIGINS.split(",") if settings.BACKEND_CORS_ORIGINS else ["*"]
 

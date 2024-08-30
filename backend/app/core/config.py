@@ -6,6 +6,9 @@ class Settings(BaseSettings):
         env_ignore_empty=True, 
         extra="ignore"
     )
+    
+    PROJECT_NAME: str
+    PROJECT_VERSION: str
     POSTGRES_SERVER: str
     POSTGRES_PORT: int  
     POSTGRES_DB: str

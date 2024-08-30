@@ -1,13 +1,15 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    DATABASE_HOSTNAME: str
-    DATABASE_PORT: str
-    DATABASE_PASSWORD: str
-    DATABASE_NAME: str
-    DATABASE_USERNAME: str
-
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(
+        env_file=".env", 
+        env_ignore_empty=True, 
+        extra="ignore"
+    )
+    POSTGRES_SERVER: str
+    POSTGRES_PORT: int  
+    POSTGRES_DB: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
 
 settings = Settings()

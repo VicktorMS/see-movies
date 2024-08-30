@@ -28,3 +28,15 @@ class TMDBService:
                 return data["results"]
             else:
                 return {"Error": "Movie not found"}
+            
+    async def get_movie_by_id(self, movie_id: int):
+        url = f"{self.api_base_url}/movie/{movie_id}"
+        
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url, headers=self.headers)
+            response.raise_for_status()
+            data = response.json()
+        if not data:
+            return {"Error": "Movie not found"}
+        
+        return data

@@ -5,6 +5,9 @@ from typing import List
 class MovieBase(BaseModel):
     external_id: str
     title: str
+    poster_path: str
+    backdrop_path: str
+    vote_average: float
     
 class MovieCreate(MovieBase):
     pass
@@ -15,11 +18,13 @@ class MovieResponse(MovieBase):
     class Config:
         from_attributes = True
         
+        
 class FavoriteListBase(BaseModel):
     name: str
+    description: str
     
 class FavoriteListCreate(FavoriteListBase):
-    movies: List[int]
+    pass
     
 class FavoriteListResponse(FavoriteListBase):
     id: int

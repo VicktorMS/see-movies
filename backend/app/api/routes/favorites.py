@@ -10,7 +10,7 @@ router = APIRouter()
 
 @router.post("/", response_model=schemas.FavoriteListResponse)
 def create_favorite_list(favorite_list: schemas.FavoriteListCreate, db: Session = Depends(get_db)):
-    db_favorite_list = crud.create_favorite_list(db, favorite_list)
+    db_favorite_list = crud.create_favorite_list(db, favorite_list=favorite_list)
     return db_favorite_list
 
 

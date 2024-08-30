@@ -13,6 +13,6 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str
     TMDB_API_BASE_URL: str
     TMDB_API_KEY: str
-    TMDB_API_READ_ACCESS_TOKEN: str
+    TMDB_API_BEARER_TOKEN: str
 
 settings = Settings()

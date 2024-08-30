@@ -4,11 +4,11 @@ from . import models, schemas
 
 
 def create_favorite_list(db: Session, favorite_list: schemas.FavoriteListCreate):
-    db_favorite_list = models.FavoriteList(name=favorite_list.name)
-    for movie in favorite_list.movies:
-        movie = db.query(models.Movie).filter(models.Movie.id == movie).first()
-        if movie:
-            db_favorite_list.movies.append(movie)
+    db_favorite_list = models.FavoriteList(name=favorite_list.name, description=favorite_list.description)
+    # for movie in favorite_list.movies:
+    #     movie = db.query(models.Movie).filter(models.Movie.id == movie).first()
+    #     if movie:
+    #         db_favorite_list.movies.append(movie)
     db.add(db_favorite_list)
     db.commit()
     db.refresh(db_favorite_list)
@@ -31,10 +31,6 @@ def update_favorite_list(db: Session, favorite_list_id: int, favorite_list: mode
     db_favorite_list.name = favorite_list.name
     
     db_favorite_list.movies = []
-    for movie in favorite_list.movies:
-        movie = db.query(models.Movie).filter(models.Movie.id == movie).first()
-        if movie:
-            db_favorite_list.movies.append(movie)
     
     db.commit()
     db.refresh(db_favorite_list)

@@ -7,7 +7,7 @@ class TMDBService:
         self.api_base_url = settings.TMDB_API_BASE_URL
         self.headers = {
             "accept": "application/json",
-            "Authorization": f"Bearer {settings.TMDB_API_READ_ACCESS_TOKEN}"
+            "Authorization": f"Bearer {settings.TMDB_API_BEARER_TOKEN}"
         }
 
     async def get_movies(self, movie_title: str):

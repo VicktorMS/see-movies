@@ -1,6 +1,6 @@
 # main.py
 from fastapi import FastAPI
-from .db import engine
+from .core.db import engine
 from . import models
 from app.api.routes import favorites
 

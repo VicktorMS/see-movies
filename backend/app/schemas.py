@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import List
 
 
@@ -15,8 +15,7 @@ class MovieCreate(MovieBase):
 class MovieResponse(MovieBase):
     id: int
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
         
         
 class FavoriteListBase(BaseModel):
@@ -30,7 +29,6 @@ class FavoriteListResponse(FavoriteListBase):
     id: int
     movies: List[MovieResponse]
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
     
     

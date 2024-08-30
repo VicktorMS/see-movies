@@ -14,6 +14,14 @@ SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.POSTGRES_USER}:{settings.POST
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_database():
+    Base.metadata.create_all(bind=engine)  # Cria todas as tabelas
+    yield
+    Base.metadata.drop_all(bind=engine)  # Remove todas as tabelas ao final dos testes
+
+
 @pytest.fixture(scope="function")
 def db_session():
     connection = engine.connect()

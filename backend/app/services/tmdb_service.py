@@ -1,7 +1,6 @@
 import httpx
+from fastapi import HTTPException, status
 from ..core.config import settings
-from fastapi import HTTPException
-
 
 class TMDBService:
     def __init__(self):
@@ -23,18 +22,18 @@ class TMDBService:
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get(url, headers=self.headers, params=params)
-                response.raise_for_status()  # Levanta uma exceção se a resposta for um código de erro HTTP
+                response.raise_for_status() 
                 data = response.json()
                 
             if data["results"]:
                 return data["results"]
             else:
-                raise HTTPException(status_code=404, detail="Movie not found")
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Movie not found")
         
         except httpx.HTTPStatusError as e:
-            if e.response.status_code == 404:
-                raise HTTPException(status_code=404, detail="Movie not found in TMDB")
-            raise HTTPException(status_code=500, detail="An error occurred while searching for the movie on TMDB")
+            if e.response.status_code == status.HTTP_404_NOT_FOUND:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Movie not found in TMDB")
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="An error occurred while searching for the movie on TMDB")
             
     async def get_movie_by_id(self, movie_id: int):
         url = f"{self.api_base_url}/movie/{movie_id}"
@@ -42,10 +41,10 @@ class TMDBService:
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get(url, headers=self.headers)
-                response.raise_for_status()  # Levanta um erro se a resposta for um código de erro HTTP
+                response.raise_for_status() 
                 return response.json()
             
         except httpx.HTTPStatusError as e:
-            if e.response.status_code == 404:
-                raise HTTPException(status_code=404, detail="Movie not found in TMDB")
-            raise HTTPException(status_code=500, detail="An error occurred while fetching the movie from TMDB")
+            if e.response.status_code == status.HTTP_404_NOT_FOUND:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Movie not found in TMDB")
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="An error occurred while fetching the movie from TMDB")

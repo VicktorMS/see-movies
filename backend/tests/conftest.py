@@ -1,10 +1,12 @@
 import pytest
+from unittest.mock import AsyncMock
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.main import app
 from app.core.db import get_db
 from app.models import Base
+from app.services.tmdb_service import TMDBService
 from app.core.config import settings
 
 
@@ -45,3 +47,12 @@ def client(db_session):
     app.dependency_overrides[get_db] = override_get_db
     yield TestClient(app)
     app.dependency_overrides.clear()
+    
+@pytest.fixture
+def tmdb_service_mock(monkeypatch):
+    mock_service = AsyncMock(spec=TMDBService)
+
+    # Patch the get_tmdb_service dependency to return this mock
+    monkeypatch.setattr("app.api.routes.movies.get_tmdb_service", lambda: mock_service)
+
+    return mock_service

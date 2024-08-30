@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import Response, APIRouter, status, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from app import crud, models, schemas
@@ -10,7 +10,7 @@ router = APIRouter()
 def get_tmdb_service():
     return TMDBService()
 
-@router.post("/", response_model=schemas.FavoriteListResponse)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.FavoriteListResponse)
 def create_favorite_list(
     favorite_list: schemas.FavoriteListCreate, 
     db: Session = Depends(get_db)
@@ -41,7 +41,7 @@ def get_favorite_list(
     """
     db_favorite_list = crud.get_favorite_list(db, favorite_list_id=favorite_list_id)
     if not db_favorite_list:
-        raise HTTPException(status_code=404, detail="Favorite list not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Favorite list not found")
     return db_favorite_list
 
 @router.put("/{favorite_list_id}", response_model=schemas.FavoriteListResponse)
@@ -55,10 +55,10 @@ def update_favorite_list(
     """
     db_favorite_list = crud.update_favorite_list(db, favorite_list_id=favorite_list_id, favorite_list_update=favorite_list)
     if not db_favorite_list:
-        raise HTTPException(status_code=404, detail="Favorite list not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Favorite list not found")
     return db_favorite_list
 
-@router.delete("/{favorite_list_id}")
+@router.delete("/{favorite_list_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_favorite_list(
     favorite_list_id: int, 
     db: Session = Depends(get_db)
@@ -68,10 +68,10 @@ def delete_favorite_list(
     """
     success = crud.delete_favorite_list(db, favorite_list_id=favorite_list_id)
     if not success:
-        raise HTTPException(status_code=404, detail="Favorite list not found")
-    return {"message": "Favorite list deleted successfully"}
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Favorite list not found")
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-@router.delete("/{favorite_list_id}/remove_movie/", response_model=schemas.FavoriteListResponse)
+@router.delete("/{favorite_list_id}/remove_movie/", status_code=status.HTTP_204_NO_CONTENT)
 def remove_movie_from_favorite_list(
     favorite_list_id: int, 
     movie_id: int, 
@@ -83,11 +83,11 @@ def remove_movie_from_favorite_list(
     db_favorite_list, error = crud.remove_movie_from_favorite_list(db, favorite_list_id, movie_id)
     
     if error == "Favorite list not found":
-        raise HTTPException(status_code=404, detail="Favorite list not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Favorite list not found")
     elif error == "Movie not in favorite list":
-        raise HTTPException(status_code=400, detail="Movie not in favorite list")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Movie not in favorite list")
     
-    return db_favorite_list
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 @router.post("/{favorite_list_id}/add_movie/", response_model=schemas.FavoriteListResponse)
 async def add_movie_to_favorite_list(
@@ -104,15 +104,15 @@ async def add_movie_to_favorite_list(
     if not movie:
         movie_data = await tmdb_service.get_movie_by_id(external_id)
         if "Error" in movie_data:
-            raise HTTPException(status_code=404, detail="Movie not found in TMDB")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Movie not found in TMDB")
         movie = crud.create_movie_from_api_data(db, movie_data)
     
     db_favorite_list = db.query(models.FavoriteList).filter(models.FavoriteList.id == favorite_list_id).first()
     if not db_favorite_list:
-        raise HTTPException(status_code=404, detail="Favorite list not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Favorite list not found")
     
     if movie in db_favorite_list.movies:
-        raise HTTPException(status_code=400, detail="Movie already in favorite list")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Movie already in favorite list")
     
     db_favorite_list.movies.append(movie)
     db.commit()

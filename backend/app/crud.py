@@ -80,3 +80,19 @@ def remove_movie_from_favorite_list(db: Session, favorite_list_id: int, movie_id
     
     return db_favorite_list, None
 
+
+def create_movie_from_api_data(db: Session, movie_data: dict):
+    movie_create = schemas.MovieCreate(
+        external_id=movie_data["id"],
+        title=movie_data["title"],
+        poster_path=movie_data.get("poster_path", ""),
+        backdrop_path=movie_data.get("backdrop_path", ""),
+        vote_average=movie_data.get("vote_average", 0.0)
+    )
+    
+    movie = models.Movie(**movie_create.dict())
+    db.add(movie)
+    db.commit()
+    db.refresh(movie)
+    return movie
+

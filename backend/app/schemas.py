@@ -3,7 +3,7 @@ from typing import List
 
 
 class MovieBase(BaseModel):
-    external_id: str
+    external_id: int
     title: str
     poster_path: str
     backdrop_path: str

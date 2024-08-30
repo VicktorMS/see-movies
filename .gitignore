@@ -1,0 +1,49 @@
+# Ignorar ambiente virtual
+/backend/.venv/
+/venv/
+env/
+ENV/
+
+# Ignorar arquivos de compilação do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignorar arquivos de banco de dados SQLite
+*.sqlite3
+*.db
+
+# Ignorar logs e arquivos temporários
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.coverage
+.cache
+coverage/
+htmlcov/
+*.cover
+*.py,cover
+*.orig
+*.rej
+.sass-cache/
+Thumbs.db
+.DS_Store
+
+# Ignorar configurações específicas de IDEs
+.vscode/
+.idea/
+*.iml
+
+# Ignorar arquivos de configuração de editor
+*.sublime-project
+*.sublime-workspace
+
+# Ignorar arquivos de bibliotecas de dependências
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignorar dependências instaladas pelo Poetry
+backend/.venv/
+poetry.lock

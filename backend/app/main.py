@@ -13,4 +13,10 @@ app.include_router(movies.router, prefix='/movies', tags=['movies'])
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {
+        "message": "Bem-vindo do projeto See Movie! 🚀 Para explorar e interagir com os endpoints disponíveis, visite a documentação interativa.",
+        "documentation": {
+            "swagger_ui": "/docs",
+            "redoc": "/redoc"
+        }
+    }

@@ -18,6 +18,10 @@ def get_favorite_lists(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.FavoriteList).offset(skip).limit(limit).all()
 
 
+def get_favorite_list(db: Session, favorite_list_id: int):
+    return db.query(models.FavoriteList).filter(models.FavoriteList.id == favorite_list_id).first()
+
+
 def add_movie_to_favorite_list(db: Session, favorite_list_id: int, movie: models.Movie):
     db_favorite_list = db.query(models.FavoriteList).filter(models.FavoriteList.id == favorite_list_id).first()
     if db_favorite_list:

@@ -14,3 +14,15 @@ def create_favorite_list(db: Session, favorite_list: schemas.FavoriteListCreate)
     return db_favorite_list
 
 
+def get_favorite_lists(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.FavoriteList).offset(skip).limit(limit).all()
+
+
+def add_movie_to_favorite_list(db: Session, favorite_list_id: int, movie: models.Movie):
+    db_favorite_list = db.query(models.FavoriteList).filter(models.FavoriteList.id == favorite_list_id).first()
+    if db_favorite_list:
+        db_favorite_list.movies.append(movie)
+        db.commit()
+        db.refresh(db_favorite_list)
+    return db_favorite_list
+

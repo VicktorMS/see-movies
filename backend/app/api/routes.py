@@ -41,3 +41,16 @@ def delete_favorite_list(favorite_list_id: int, db: Session = Depends(get_db)):
     if not success:
         raise HTTPException(status_code=404, detail="Favorite list not found")
     return {"message": "Favorite list deleted successfully"}
+
+@router.post("/favorites/{favorite_list_id}/add_movie/", response_model=schemas.FavoriteListResponse)
+def add_movie_to_favorite_list(favorite_list_id: int, movie_id: int, db: Session = Depends(get_db)):
+    db_favorite_list, error = crud.add_movie_to_favorite_list(db, favorite_list_id, movie_id)
+    
+    if error == "Movie not found":
+        raise HTTPException(status_code=404, detail="Movie not found")
+    elif error == "Favorite list not found":
+        raise HTTPException(status_code=404, detail="Favorite list not found")
+    elif error == "Movie already in favorite list":
+        raise HTTPException(status_code=400, detail="Movie already in favorite list")
+    
+    return db_favorite_list

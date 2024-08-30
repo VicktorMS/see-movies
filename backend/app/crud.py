@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from typing import List
 from . import models, schemas
 
 
@@ -49,11 +50,22 @@ def delete_favorite_list(db: Session, favorite_list_id: int):
     return True
 
 
-def add_movie_to_favorite_list(db: Session, favorite_list_id: int, movie: models.Movie):
+def add_movie_to_favorite_list(db: Session, favorite_list_id: int, movie_id: int):
+    movie = db.query(models.Movie).filter(models.Movie.id == movie_id).first()
+    if not movie:
+        return None, "Movie not found"
+
     db_favorite_list = db.query(models.FavoriteList).filter(models.FavoriteList.id == favorite_list_id).first()
-    if db_favorite_list:
-        db_favorite_list.movies.append(movie)
-        db.commit()
-        db.refresh(db_favorite_list)
-    return db_favorite_list
+    if db_favorite_list is None:
+        return None, "Favorite list not found"
+    
+    if movie in db_favorite_list.movies:
+        return None, "Movie already in favorite list"
+    
+    db_favorite_list.movies.append(movie)
+    db.commit()
+    db.refresh(db_favorite_list)
+    
+    return db_favorite_list, None
+
 

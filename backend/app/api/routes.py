@@ -25,3 +25,11 @@ def get_favorite_list(favorite_list_id: int, db: Session = Depends(get_db)):
     if db_favorite_list is None:
         raise HTTPException(status_code=404, detail="Favorite list not found")
     return db_favorite_list
+
+
+@router.delete("/favorites/{favorite_list_id}")
+def delete_favorite_list(favorite_list_id: int, db: Session = Depends(get_db)):
+    success = crud.delete_favorite_list(db, favorite_list_id=favorite_list_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Favorite list not found")
+    return {"message": "Favorite list deleted successfully"}

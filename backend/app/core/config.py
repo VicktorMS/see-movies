@@ -14,5 +14,6 @@ class Settings(BaseSettings):
     TMDB_API_BASE_URL: str
     TMDB_API_KEY: str
     TMDB_API_BEARER_TOKEN: str
+    BACKEND_CORS_ORIGINS: str = "*"
 
 settings = Settings()

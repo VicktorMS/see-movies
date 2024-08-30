@@ -18,7 +18,7 @@ def create_favorite_list(
     """
     Create a new favorite list.
     """
-    return crud.create_favorite_list(db, favorite_list=favorite_list)
+    return crud.create_favorite_list(db, favorite_list_create=favorite_list)
 
 @router.get("/", response_model=List[schemas.FavoriteListResponse])
 def get_favorite_lists(

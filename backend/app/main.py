@@ -2,13 +2,13 @@
 from fastapi import FastAPI
 from .db import engine
 from . import models
-from .api.routes import router as api_router
+from app.api.routes import favorites
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-app.include_router(api_router)
+app.include_router(favorites.router, prefix='/favorites', tags=['favorites'])
 
 @app.get("/")
 async def root():

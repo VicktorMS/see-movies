@@ -97,7 +97,7 @@ def create_movie_from_api_data(db: Session, movie_data: dict) -> models.Movie:
         vote_average=movie_data.get("vote_average", 0.0)
     )
     
-    movie = models.Movie(**movie_create.dict())
+    movie = models.Movie(**movie_create.model_dump())
     db.add(movie)
     db.commit()
     db.refresh(movie)

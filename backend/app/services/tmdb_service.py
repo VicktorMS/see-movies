@@ -48,3 +48,25 @@ class TMDBService:
             if e.response.status_code == status.HTTP_404_NOT_FOUND:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Movie not found in TMDB")
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="An error occurred while fetching the movie from TMDB")
+
+    async def get_movies(self, page: int = 1, language: str = "en-US", sort_by: str = "popularity.desc", include_adult: bool = False):
+        url = f"{self.api_base_url}/discover/movie"
+        params = {
+            "language": language,
+            "sort_by": sort_by,
+            "include_adult": str(include_adult).lower(),
+            "page": page
+        }
+        
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(url, headers=self.headers, params=params)
+                response.raise_for_status()
+                data = response.json()
+                
+            return data
+            
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == status.HTTP_404_NOT_FOUND:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No movies found")
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="An error occurred while discovering movies on TMDB")

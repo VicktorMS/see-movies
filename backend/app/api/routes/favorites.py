@@ -1,4 +1,4 @@
-from fastapi import Response, APIRouter, status, Depends, HTTPException
+from fastapi import Response, APIRouter, status, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List
 from app import crud, models, schemas
@@ -37,6 +37,25 @@ def get_favorite_lists(
     - **limit**: The maximum number of records to return.
     """
     return crud.get_favorite_lists(db, skip=skip, limit=limit)
+
+@router.get("/search", status_code=status.HTTP_200_OK, summary="Search Favorite Lists by Title", description="Search for favorite lists by title.")
+async def search_favorite_lists(
+    title: str = Query(..., description="Title or part of the title of the favorite list to search for"), 
+    db: Session = Depends(get_db)
+):
+    """
+    Search for favorite lists by title.
+
+    - **title**: The title or part of the title of the favorite list you want to search for.
+
+    This endpoint allows you to search for favorite lists based on a partial or full title.
+    """
+    favorite_lists = crud.search_favorite_lists_by_title(db, title=title)
+    
+    if not favorite_lists:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No favorite lists found with the given title")
+    
+    return favorite_lists
 
 @router.get("/{favorite_list_id}", response_model=schemas.FavoriteListResponse, summary="Get a Favorite List by ID", description="Retrieves the details of a specific favorite list by its ID.")
 def get_favorite_list(
@@ -142,3 +161,5 @@ async def add_movie_to_favorite_list(
     db.refresh(db_favorite_list)
     
     return db_favorite_list
+
+

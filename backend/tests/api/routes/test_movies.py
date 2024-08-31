@@ -36,3 +36,34 @@ def test_get_movie_by_id_not_found(client, tmdb_service_mock):
     response = client.get("/movies/99999999999")
     assert response.status_code == status.HTTP_404_NOT_FOUND
     assert response.json() == {"detail": "Movie not found in TMDB"}
+
+
+def test_get_movies_success(client):
+    response = client.get("/movies")
+    
+    assert response.status_code == 200
+    data = response.json()
+    assert data["page"] == 1
+    assert len(data["results"]) > 0
+    assert data["total_pages"] > 0
+    assert data["total_results"] > 0
+    
+def test_get_movies_with_query_params(client):
+    response = client.get("/movies", params={"page": 2, "sort_by": "release_date.desc"})
+    
+    assert response.status_code == 200
+    data = response.json()
+    assert data["page"] == 2
+    assert len(data["results"]) > 0
+    assert data["total_pages"] > 0
+    assert data["total_results"] > 0
+
+def test_get_movies_not_found(client):
+    response = client.get("/movies", params={"page": 500})  
+    
+    assert response.status_code == 200  
+    data = response.json()
+    assert data["page"] == 500
+    assert len(data["results"]) >= 0  
+    assert data["total_pages"] >= 0
+    assert data["total_results"] >= 0

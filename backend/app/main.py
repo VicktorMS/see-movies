@@ -5,7 +5,7 @@ from . import models
 from app.api.routes import favorites, movies
 from fastapi.middleware.cors import CORSMiddleware
 
-# models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title=settings.PROJECT_NAME + " API",

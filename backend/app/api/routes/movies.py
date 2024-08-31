@@ -39,3 +39,24 @@ async def get_movie_by_id(
     if "Error" in movie_data:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=movie_data["Error"])
     return movie_data
+
+@router.get("/", status_code=status.HTTP_200_OK, summary="Get Movies", description="Get movies on TMDB based on popularity, release date, and other criteria.")
+async def get_movies(
+    page: int = Query(1, description="Page number of the results"),
+    language: str = Query("en-US", description="Language of the movies"),
+    sort_by: str = Query("popularity.desc", description="Sorting criteria for the movies"),
+    include_adult: bool = Query(False, description="Whether to include adult movies"),
+    tmdb_service: TMDBService = Depends(get_tmdb_service)
+):
+    """
+    Get movies on TMDB.
+
+    - **page**: The page number to retrieve (pagination).
+    - **language**: The language of the movies (default is "en-US").
+    - **sort_by**: The criteria to sort the movies (default is by popularity).
+    - **include_adult**: Whether to include adult movies in the results.
+
+    This endpoint allows you to discover movies based on various criteria using the TMDB API.
+    """
+    movie_data = await tmdb_service.get_movies(page=page, language=language, sort_by=sort_by, include_adult=include_adult)
+    return movie_data

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Title from "@/app/ui/title";
 
 export default function Home() {
   const [message, setMessage] = useState("");
@@ -26,7 +27,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Movies page</h1>
+      <Title>Principais Filmes</Title>
       <p>{message}</p>
     </div>
   );

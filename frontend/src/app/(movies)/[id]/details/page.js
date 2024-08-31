@@ -1,7 +1,9 @@
+import Title from "@/app/ui/title";
+
 export default async function Page() {
   return (
     <main>
-      <h1>Movie Details Page</h1>
+      <Title>Principais Filmes</Title>
     </main>
   );
 }

@@ -2,7 +2,7 @@ from fastapi import status
 
 def test_search_movies_success(client, tmdb_service_mock):
     # Simula uma resposta bem-sucedida do serviço TMDB
-    tmdb_service_mock.get_movies.return_value = [{"id": 1, "title": "Inception"}]
+    tmdb_service_mock.search_movies.return_value = [{"id": 1, "title": "Inception"}]
     
     response = client.get("/movies/search?movie_title=Inception")
     assert response.status_code == status.HTTP_200_OK
@@ -13,7 +13,7 @@ def test_search_movies_success(client, tmdb_service_mock):
 
 def test_search_movies_not_found(client, tmdb_service_mock):
     # Simula um erro 404 do serviço TMDB
-    tmdb_service_mock.get_movies.return_value = {"Error": "Movie not found"}
+    tmdb_service_mock.search_movies.return_value = {"Error": "Movie not found"}
     
     response = client.get("/movies/search?movie_title=NonexistentMovie")
     assert response.status_code == status.HTTP_404_NOT_FOUND

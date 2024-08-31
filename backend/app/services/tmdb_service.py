@@ -10,7 +10,7 @@ class TMDBService:
             "Authorization": f"Bearer {settings.TMDB_API_BEARER_TOKEN}"
         }
 
-    async def get_movies(self, movie_title: str):
+    async def search_movies(self, movie_title: str):
         url = f"{self.api_base_url}/search/movie"
         params = {
             "query": movie_title,

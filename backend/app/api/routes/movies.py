@@ -18,7 +18,7 @@ async def search_movies(
 
     This endpoint allows you to search for movies based on a partial or full title. The results are fetched from TMDB.
     """
-    movie_data = await tmdb_service.get_movies(movie_title)
+    movie_data = await tmdb_service.search_movies(movie_title)
     if "Error" in movie_data:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=movie_data["Error"])
     return movie_data

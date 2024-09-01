@@ -3,6 +3,7 @@ import Footer from "./ui/layouts/footer";
 import { Inter } from "next/font/google";
 import "./ui/globals.css";
 import SearchBar from "./ui/search-bar";
+import BottomNavigation from "./ui/bottom-navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,10 +17,10 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR">
       <body className={`${inter.className} bg-gray-100 text-gray-900`}>
         <Header />
-        <main className="container mx-auto py-6 px-4 h-full">
+        <main className="container mx-auto py-6 px-4">
           {children}
         </main>
-
+        <BottomNavigation/>
         <Footer />
       </body>
     </html>

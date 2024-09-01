@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" data-theme="bumblebee">
       <body className={`${inter.className}`}>
         <Header />
         <main className="container mx-auto py-6 px-4">

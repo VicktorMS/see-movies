@@ -35,6 +35,10 @@ def update_favorite_list(
     db.refresh(db_favorite_list)
     return db_favorite_list
 
+def search_favorite_lists_by_title(db: Session, title: str) -> List[models.FavoriteList]:
+    """Search for favorite lists by title."""
+    return db.query(models.FavoriteList).filter(models.FavoriteList.name.ilike(f"%{title}%")).all()
+
 
 def delete_favorite_list(db: Session, favorite_list_id: int) -> bool:
     """Delete a favorite list."""

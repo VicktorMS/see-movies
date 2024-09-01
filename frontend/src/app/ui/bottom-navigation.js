@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function BottomNavigation() {
 
     return (
-        <div className="btm-nav">
+        <div className="btm-nav z-[90] md:hidden">
             <Link href="/">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

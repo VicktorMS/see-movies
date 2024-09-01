@@ -17,7 +17,6 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} bg-gray-100 text-gray-900`}>
         <Header />
         <main className="container mx-auto py-6 px-4">
-          <SearchBar />
           {children}
         </main>
 

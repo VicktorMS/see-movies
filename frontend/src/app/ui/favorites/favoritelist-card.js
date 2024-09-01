@@ -4,10 +4,9 @@ import Link from 'next/link';
 function FavoriteListCard({ favoriteList }) {
   const { name, id, description, movies } = favoriteList;
 
-  // Verifica se há filmes na lista; se não, usa um backdrop padrão
   const movies_posters = movies?.length > 0
-    ? movies.slice(0, 3).map(movie => movie.poster_path)
-    : ['/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg']; // Substitua pelo caminho do seu backdrop padrão
+    ? movies.slice(0, 5).map(movie => movie.poster_path)
+    : [];
 
   return (
     <div className="bg-base-100 rounded-md shadow-md grid grid-cols-3 sm:grid-cols-2 relative">
@@ -19,7 +18,7 @@ function FavoriteListCard({ favoriteList }) {
         <p className="text-sm md:text-base truncate">{description}</p>
         <div className="card-actions justify-end">
           <div className="dropdown dropdown-end absolute top-0 right-0">
-            <div tabIndex="0" role="button" className="btn m-1">...</div>
+            <div tabIndex="0" role="button" className="btn m-1 btn-sm">...</div>
             <ul tabIndex="0" className="dropdown-content menu bg-base-100 rounded-box z-[99] w-52 p-2 shadow">
               <li><a>Compartilhar Lista</a></li>
               <li><a>Editar</a></li>
@@ -36,16 +35,21 @@ function FavoriteListCard({ favoriteList }) {
 }
 
 function ImageStack({ images }) {
+  if (images.length === 0) {
+    for (let i = 0; i < 5; i++) {
+      images.push(null);
+    }
+  }
   return (
     <div className="stack">
       {images.map((image, index) => (
         <img
           key={index}
-          width={500}
+          width={200}
           height={300}
-          src={`https://image.tmdb.org/t/p/original${image}`}
+          src={image ? `https://image.tmdb.org/t/p/original${image}` : '/default-poster.png'}
           alt={`Mosaic Image ${index + 1}`}
-          className="rounded-md"
+          className="rounded-md object-fill"
         />
       ))}
     </div>

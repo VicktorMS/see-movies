@@ -1,13 +1,21 @@
-function MovieCard({ title, overview, posterPath }) {
+import Image from "next/image";
+
+function MovieCard({ movie }) {
+    const { title, overview, posterPath, vote_average } = movie;
+    
     return (
-      <div className="movie-card bg-white shadow-md rounded-lg overflow-hidden">
-        {/* <img src={posterPath} alt={`${title} Poster`} className="w-full h-48 object-cover" /> */}
-        <div className="p-4">
-          <h3 className="text-lg font-bold mb-2">{title}</h3>
-          <p className="text-sm text-gray-600">{overview}</p>
+      <div className="overflow-hidden relative">
+        <img 
+          src={posterPath} 
+          alt={`${title} Poster`} 
+          className="shadow-md rounded-lg" 
+        />
+        <div className="pt-4">
+          <h3 className="text-lg text-center font-bold mb-2">{title}</h3>
         </div>
+        <p className="font-bold text-primary-content absolute bg-primary rounded-b-md top-0 left-2 p-2">{vote_average.toFixed(1)}</p>
       </div>
     );
-  }
+}
 
 export default MovieCard;

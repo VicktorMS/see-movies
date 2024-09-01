@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 
 export async function fetchMovies(setMovies, setMessage) {
     try {
@@ -12,6 +14,17 @@ export async function fetchMovies(setMovies, setMessage) {
     } catch (error) {
         setMessage(error.message);
     }
+}
+
+export async function fetchFavoriteLists() {
+    try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites`);
+        return response.data; 
+      } catch (error) {
+        console.error("Erro ao buscar os filmes favoritos:", error);
+        throw new Error("Erro ao buscar os filmes favoritos.");
+      }
+    
 }
 
 export async function fetchMovieDetailsById(id) {

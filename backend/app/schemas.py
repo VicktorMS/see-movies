@@ -67,6 +67,8 @@ class FavoriteListCreate(FavoriteListBase):
 
 class FavoriteListResponse(FavoriteListBase):
     id: int
+    name: str
+    description: str
     movies: List[MovieResponse]
     
     model_config = ConfigDict(

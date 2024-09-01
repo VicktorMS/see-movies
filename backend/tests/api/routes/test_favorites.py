@@ -126,3 +126,19 @@ def test_add_movie_to_non_existent_favorite_list(client, db_session: Session, tm
 
     assert response.status_code == status.HTTP_404_NOT_FOUND
     assert response.json() == {"detail": "Favorite list not found"}
+    
+def test_search_favorite_lists(client):
+    client.post("/favorites/", json={"name": "My Favorite Movies", "description": "A list of my all-time favorite movies"})
+    client.post("/favorites/", json={"name": "Top 10 Action Movies", "description": "Action movies I love"})
+    client.post("/favorites/", json={"name": "Best of 2023", "description": "Favorite movies of 2023"})
+
+    response = client.get("/favorites/search", params={"title": "Favorite"})  
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data) > 0
+    assert any("Favorite" in favorite_list["name"] for favorite_list in data)
+
+def test_search_favorite_lists_no_results(client):
+    assert response.status_code == 404
+    data = response.json()
+    assert data["detail"] == "No favorite lists found with the given title"

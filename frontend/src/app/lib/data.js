@@ -16,14 +16,19 @@ export async function fetchMovies(setMovies, setMessage) {
     }
 }
 
-export async function fetchFavoriteLists() {
+export async function fetchFavoriteLists(setFavoriteLists, setMessage) {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites`);
-        return response.data; 
-      } catch (error) {
-        console.error("Erro ao buscar os filmes favoritos:", error);
-        throw new Error("Erro ao buscar os filmes favoritos.");
-      }
+        setMessage("Carregando...");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar lista de favoritos");
+        }
+        const data = await response.json();
+        setFavoriteLists(data);
+        setMessage("")
+    } catch (error) {
+        setMessage(error.message);
+    }
     
 }
 

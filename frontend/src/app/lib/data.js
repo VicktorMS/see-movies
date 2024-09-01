@@ -39,3 +39,33 @@ export async function fetchMovieDetailsById(id) {
     }
     return response.json();
 };
+
+export async function createFavoriteList(name, description){
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites`; 
+    const requestBody = {
+      name: name,
+      description: description,
+    };
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Erro ao criar a lista de favoritos');
+      }
+  
+      const data = await response.json();
+      console.log('Lista de favoritos criada com sucesso:', data);
+      return data;
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+      return null;
+    }
+  };
+  

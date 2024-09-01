@@ -15,8 +15,8 @@ export default function BottomDrawer({ isOpen, onClose, children }){
             isOpen ? 'translate-y-0' : 'translate-y-full'
           } bg-base-100 border-t-4 border-secondary shadow-lg z-[100]`}
         >
-          <div className="p-4">
-            <button onClick={onClose} className="btn btn-secondary w-fit text-right w-full">
+          <div className="p-4 text-end">
+            <button onClick={onClose} className="btn btn-secondary w-fit text-right">
               Fechar
             </button>
           </div>

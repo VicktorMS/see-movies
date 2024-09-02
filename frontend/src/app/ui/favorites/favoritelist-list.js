@@ -7,7 +7,7 @@ function FavoriteListList({ favoriteLists, onUpdate }) {
         <FavoriteListCard 
           key={favoriteList.id}
           favoriteList={favoriteList}
-          onUpdate={onUpdate} // Passa a função onUpdate para cada card
+          onUpdate={onUpdate} 
         />
       ))}
     </div>

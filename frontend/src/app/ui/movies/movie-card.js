@@ -5,7 +5,7 @@ import AddMovieToFavorite from "@/app/ui/movies/add-movie-to-favorite";
 import RemoveMovieFromFavorite from "@/app/ui/favorites/remove-movie-from-favorite";
 
 const MovieCard = React.forwardRef(({ movie, in_favorite_list = false, listId, onMovieRemoved }, ref) => {
-  const { id, title, posterPath, vote_average } = movie;
+  const { id, title, external_id, posterPath, vote_average } = movie;
 
   return (
     <div ref={ref} className="relative overflow-hidden">
@@ -15,7 +15,7 @@ const MovieCard = React.forwardRef(({ movie, in_favorite_list = false, listId, o
         listId={listId} 
         onMovieRemoved={onMovieRemoved} 
       />
-      <MovieLink id={id} title={title} posterPath={posterPath} voteAverage={vote_average} />
+      <MovieLink id={in_favorite_list ? external_id : id} title={title} posterPath={posterPath} voteAverage={vote_average} />
     </div>
   );
 });

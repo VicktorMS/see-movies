@@ -2,10 +2,34 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(() => resolve(), ms));
 }
 
+export async function searchMovies(movieTitle, setMessage) {
+  try {
+    setMessage("Buscando...");
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/movies/search?movie_title=${encodeURIComponent(movieTitle)}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar filmes");
+    }
+
+    const data = await response.json();
+    setMessage("");
+    return {
+      results: data, // Retornando os resultados como uma propriedade do objeto
+    };
+  } catch (error) {
+    setMessage(error.message);
+    return { results: [] }; // Retorna um objeto vazio em caso de erro
+  }
+}
+
 export async function fetchMovies(page = 0, setMessage) {
   try {
       setMessage("Carregando...");
-      await sleep(2000);
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/movies?page=${page}`);
       if (!response.ok) {
           throw new Error("Erro ao buscar filmes");

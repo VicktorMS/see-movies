@@ -6,6 +6,10 @@ import AddMovieToFavorite from "./add-movie-to-favorite";
 const MovieCard = React.forwardRef(({ movie, in_favorite_list = false }, ref) => {
   const { id, title, overview, posterPath, vote_average } = movie;
 
+  const imageUrl = posterPath ? `https://image.tmdb.org/t/p/original${posterPath}` : '/default-poster.png';
+  const imageAlt = posterPath ? `${title} Poster` : `${title} Poster - Padrão`;
+
+
   return (
     <div ref={ref} className="relative overflow-hidden">
       {in_favorite_list ? (
@@ -18,8 +22,8 @@ const MovieCard = React.forwardRef(({ movie, in_favorite_list = false }, ref) =>
       <Link href={`/${id}/details`}>
         <div>
           <Image
-            src={posterPath ? posterPath : '/default-poster.png'}
-            alt={`${title} Poster`}
+            src={imageUrl}
+            alt={imageAlt}
             width={200}
             height={300}
             className="w-full rounded-lg"

@@ -1,15 +1,24 @@
-import React, { Suspense } from "react";
+'use client'
+import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import Title from "@/app/ui/title";
-import MoviesSection from "@/app/ui/movies/movies-section"; // Componente que vamos criar
+import MoviesSection from "@/app/ui/movies/movies-section";
+import SearchBar from "@/app/ui/search-bar"; // Componente da barra de pesquisa
 
 export default function HomeLayout() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
   return (
     <>
       <FavoritesLink />
-      <Title>Principais Filmes</Title>
+      <SearchBar onSearch={handleSearch} />
+      <Title>{searchQuery ? `Resultados da busca para: ${searchQuery}` : "Principais Filmes"}</Title>
       <Suspense fallback={<div>Loading...</div>}>
-        <MoviesSection />
+        <MoviesSection searchQuery={searchQuery} />
       </Suspense>
     </>
   );

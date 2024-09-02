@@ -1,11 +1,11 @@
 'use client'
-import React, { useEffect, useState, useRef, useCallback, Suspense, lazy } from "react";
-import { fetchMovies } from "@/app/lib/data";
-import MovieListSkeleton from "@/app/ui/movies/movies-skeleton";
+import React, { useEffect, useState, useRef, useCallback, lazy } from "react";
+import { fetchMovies, searchMovies } from "@/app/lib/data";
+import MovieListSkeleton from "../movies/movies-skeleton";
 
 const MovieList = lazy(() => import('@/app/ui/movies/movie-list'));
 
-export default function MoviesSection() {
+export default function MoviesSection({ searchQuery }) {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [message, setMessage] = useState("");
@@ -16,24 +16,26 @@ export default function MoviesSection() {
   useEffect(() => {
     const loadMovies = async () => {
       setLoading(true);
-      const data = await fetchMovies(page, setMessage);
-      setMovies(prevMovies => [...prevMovies, ...data.results]);
-      setHasMore(data.hasMore);
+      const data = searchQuery
+        ? await searchMovies(searchQuery, setMessage)
+        : await fetchMovies(page, setMessage);
+      setMovies(prevMovies => searchQuery ? data.results : [...prevMovies, ...data.results]);
+      setHasMore(!searchQuery && data.hasMore);
       setLoading(false);
     };
 
     if (initialRender.current) {
       initialRender.current = false;
       loadMovies();
-    } else if (page > 1) {
+    } else if (page > 1 || searchQuery) {
       loadMovies();
     }
-  }, [page]);
+  }, [page, searchQuery]);
 
   const observer = useRef();
 
   const lastMovieElementRef = useCallback((node) => {
-    if (loading || !hasMore) return;
+    if (loading || !hasMore || searchQuery) return;
 
     if (observer.current) observer.current.disconnect();
 
@@ -44,13 +46,15 @@ export default function MoviesSection() {
     });
 
     if (node) observer.current.observe(node);
-  }, [loading, hasMore]);
+  }, [loading, hasMore, searchQuery]);
 
   return (
     <>
-      <Suspense fallback={<MovieListSkeleton />}>
-        <MovieList movies={movies} lastMovieElementRef={lastMovieElementRef} loading={loading} />
-      </Suspense>
+      {loading && page === 1 ? (
+        <MovieListSkeleton />
+      ) : (
+        <MovieList movies={movies} lastMovieElementRef={searchQuery ? null : lastMovieElementRef} loading={loading} />
+      )}
       {message && <p className="text-center mt-4">{message}</p>}
     </>
   );

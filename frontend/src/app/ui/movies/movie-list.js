@@ -14,7 +14,7 @@ function MovieList({ movies, lastMovieElementRef, in_favorite_list = false, load
                 id: movie.id,
                 title: movie.title,
                 overview: movie.overview,
-                posterPath: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
+                posterPath: movie.poster_path,
                 vote_average: movie.vote_average,
               }}
               in_favorite_list={in_favorite_list}
@@ -28,7 +28,7 @@ function MovieList({ movies, lastMovieElementRef, in_favorite_list = false, load
                 id: movie.id,
                 title: movie.title,
                 overview: movie.overview,
-                posterPath: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
+                posterPath: movie.poster_path,
                 vote_average: movie.vote_average,
               }}
               in_favorite_list={in_favorite_list}

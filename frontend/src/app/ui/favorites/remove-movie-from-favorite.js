@@ -1,22 +1,33 @@
 'use client';
 import React, { useState } from 'react';
 import { removeMovieFromFavoriteList } from '@/app/lib/data';
+import { useToast } from '@/app/ui/toast-context';
 
 function RemoveMovieFromFavorite({ listId, movieId, onMovieRemoved }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  const { showToast } = useToast();
+
   const handleRemove = async () => {
-    if (!confirm("Tem certeza que deseja remover este filme da lista de favoritos?")) {
-      return;
-    }
 
     setLoading(true);
     const isRemoved = await removeMovieFromFavoriteList(listId, movieId, setMessage);
     setLoading(false);
 
     if (isRemoved && onMovieRemoved) {
-      onMovieRemoved(movieId); // Chama a função para remover o filme da lista na UI
+      onMovieRemoved(movieId);
+      showToast({
+        message: 'Filme removido da lista com sucesso!',
+        style: 'alert-success',
+        isVisible: true,
+      });
+    } else if (!isRemoved) {
+      showToast({
+        message: 'Erro ao remover o filme da lista.',
+        style: 'alert-error',
+        isVisible: true,
+      });
     }
   };
 
@@ -29,9 +40,8 @@ function RemoveMovieFromFavorite({ listId, movieId, onMovieRemoved }) {
       >
         {loading ? "Removendo..." : "REMOVER"}
       </button>
-      {message && <p className="text-red-500 text-xs mt-2">{message}</p>}
     </>
   );
 }
 
-export default RemoveMovieFromFavorite;
+export default RemoveMovieFromFavorite

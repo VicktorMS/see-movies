@@ -1,38 +1,63 @@
+'use client';
 import Link from 'next/link';
-
+import { Popcorn, ListHeart } from '@phosphor-icons/react';
+import { useState, useEffect } from 'react';
 
 export default function BottomNavigation() {
+    const [currentPath, setCurrentPath] = useState('');
+
+    useEffect(() => {
+        const handleRouteChange = () => {
+            setCurrentPath(window.location.pathname);
+        };
+
+        // Atualiza o estado ao montar o componente
+        handleRouteChange();
+
+        // Escuta o evento popstate para lidar com a navegação no histórico
+        window.addEventListener('popstate', handleRouteChange);
+
+        // Limpa o event listener ao desmontar o componente
+        return () => {
+            window.removeEventListener('popstate', handleRouteChange);
+        };
+    }, []);
 
     return (
         <div className="btm-nav z-[90] md:hidden">
-            <Link href="/">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-            </Link>
-            <Link href="/favorites" className="text-secondary active">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </Link>
+            <NavItem 
+                href="/" 
+                icon={Popcorn} 
+                currentPath={currentPath}
+                label="Filmes"
+                setCurrentPath={setCurrentPath}
+            />
+            <NavItem 
+                href="/favorites" 
+                icon={ListHeart} 
+                currentPath={currentPath} 
+                label="Favorites"
+                setCurrentPath={setCurrentPath}
+            />
         </div>
+    );
+}
+
+function NavItem({ href, icon: Icon, currentPath, label, setCurrentPath }) {
+    const isActive = currentPath === href;
+
+    const handleClick = () => {
+        setCurrentPath(href);
+    };
+
+    return (
+        <Link href={href} onClick={handleClick}>
+            <Icon 
+                size={32} 
+                className={`transition-colors duration-300 ease-in-out ${isActive ? 'text-primary' : 'text-black'}`} 
+                color={isActive ? '#0f7ec2' : '#000'}
+            />
+            <p className={`transition-colors duration-300 ease-in-out ${isActive ? 'text-primary font-medium' : 'text-black'}`}>{label}</p>
+        </Link>
     );
 }

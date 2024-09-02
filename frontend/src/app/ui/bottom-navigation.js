@@ -55,9 +55,9 @@ function NavItem({ href, icon: Icon, currentPath, label, setCurrentPath }) {
             <Icon 
                 size={32} 
                 className={`transition-colors duration-300 ease-in-out ${isActive ? 'text-primary' : 'text-black'}`} 
-                color={isActive ? '#0f7ec2' : '#000'}
+                color={isActive ? '#0f7ec2' : '#fff'}
             />
-            <p className={`transition-colors duration-300 ease-in-out ${isActive ? 'text-primary font-medium' : 'text-black'}`}>{label}</p>
+            <p className={`transition-colors duration-300 ease-in-out ${isActive ? 'text-[#0f7ec2] font-medium' : 'text-white'}`}>{label}</p>
         </Link>
     );
 }

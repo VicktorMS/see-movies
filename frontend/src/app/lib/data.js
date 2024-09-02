@@ -69,10 +69,10 @@ export async function createFavoriteList(name, description){
     }
   };
   
-  export async function fetchFavoriteListDetailsById(id) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites/${id}`);
-    if (!response.ok) {
-        throw new Error("Erro ao buscar os detalhes do filme");
-    }
-    return response.json();
+export async function fetchFavoriteListDetailsById(id) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites/${id}`);
+  if (!response.ok) {
+      throw new Error("Erro ao buscar os detalhes do filme");
+  }
+  return response.json();
 };

@@ -1,17 +1,17 @@
 import Image from "next/image";
 import Link from 'next/link';
+import AddMovieToFavorite from "./add-movie-to-favorite";
 
 function MovieCard({ movie, in_favorite_list = false }) {
   const { id, title, overview, posterPath, vote_average } = movie;
 
   return (
     <div className="relative overflow-hidden">
-      <button className={in_favorite_list ? 'absolute right-2 top-2 btn btn-error btn-xs z-30' : 'hidden'}>
+      {in_favorite_list ? <button className={in_favorite_list ? 'absolute right-2 top-2 btn btn-error btn-xs z-30' : 'hidden'}>
         REMOVER
-      </button>
-      <button className={!in_favorite_list ? 'absolute right-2 top-2 btn btn-success btn-xs z-30' : 'hidden'}>
-        FAVORITAR
-      </button>
+      </button> : <AddMovieToFavorite movie_id={id}/>}
+      
+      {/* <AddMovieToFavorite/> */}
       <Link href={`/${id}/details`}>
         <div>
           <img

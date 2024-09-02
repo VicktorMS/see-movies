@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react';
 import { fetchFavoriteLists } from '@/app/lib/data';
+import FavoriteListAdder from '@/app/ui/movies/favorite-list-adder';
 
 function AddMovieToFavorite({ movie_id }) {
   const [favoriteLists, setFavoriteLists] = useState([]);
@@ -26,7 +27,7 @@ function AddMovieToFavorite({ movie_id }) {
               <p className="text-sm text-red-600">{message}</p>
             ) : (
               favoriteLists.map((favoriteList) => (
-                <FavoriteListItem key={favoriteList.id} favoriteList={favoriteList} />
+                <FavoriteListAdder key={favoriteList.id} favoriteList={favoriteList} movie_id={movie_id} />
               ))
             )}
           </div>
@@ -41,14 +42,5 @@ function AddMovieToFavorite({ movie_id }) {
   );
 }
 
-function FavoriteListItem({ favoriteList, movie_id }) {
-  // Esse componente deve ter um botão que deve fazer uma chamada para a API para adicionar o filme a uma lista de favoritos
-  return (
-    <div className="p-2 border-b">
-      <h4 className="font-bold">{favoriteList.name}</h4>
-      <p className="text-sm text-gray-600">{favoriteList.description}</p>
-    </div>
-  );
-}
 
 export default AddMovieToFavorite;

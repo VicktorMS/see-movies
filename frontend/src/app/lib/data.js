@@ -76,3 +76,32 @@ export async function fetchFavoriteListDetailsById(id) {
   }
   return response.json();
 };
+
+
+export async function addMovieToFavoriteList(favoriteListId, externalMovieId, setMessage, setIsSuccess) {
+  try {
+    setMessage("Adding movie to favorite list...");
+    setIsSuccess(false);
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites/${favoriteListId}/add_movie/?external_id=${externalMovieId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add movie to favorite list");
+    }
+
+    const data = await response.json();
+    setMessage("Movie successfully added to the favorite list!");
+    setIsSuccess(true);
+
+    return data;
+  } catch (error) {
+    setMessage(error.message);
+    setIsSuccess(false);
+  }
+}
+

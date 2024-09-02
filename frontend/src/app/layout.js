@@ -2,7 +2,7 @@ import Header from "./ui/layouts/header";
 import Footer from "./ui/layouts/footer";
 import { Inter } from "next/font/google";
 import "./ui/globals.css";
-import SearchBar from "./ui/search-bar";
+import { ToastProvider } from '@/app/ui/toast-context';
 import BottomNavigation from "./ui/bottom-navigation";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,9 +17,11 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" data-theme="luxury">
       <body className={`${inter.className}`}>
         <Header />
-        <main className="container mx-auto py-6 px-4">
-          {children}
-        </main>
+        <ToastProvider>
+          <main className="container mx-auto py-6 px-4">
+            {children}
+          </main>
+        </ToastProvider>
         <BottomNavigation/>
       </body>
     </html>

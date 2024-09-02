@@ -8,17 +8,23 @@ export function useToast() {
 }
 
 export function ToastProvider({ children }) {
-  const [isToastVisible, setIsToastVisible] = useState(false);
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: '',
+    style: '',
+  });
 
-  const showToast = () => {
-    setIsToastVisible(true);
-    setTimeout(() => {
-      setIsToastVisible(false);
-    }, 3000); 
+  const showToast = ({ message, style = '', isVisible = true }) => {
+    setToast({ isVisible, message, style });
+    if (isVisible) {
+      setTimeout(() => {
+        setToast({ isVisible: false, message: '', style: '' });
+      }, 3000);
+    }
   };
 
   return (
-    <ToastContext.Provider value={{ isToastVisible, showToast }}>
+    <ToastContext.Provider value={{ toast, showToast }}>
       {children}
     </ToastContext.Provider>
   );

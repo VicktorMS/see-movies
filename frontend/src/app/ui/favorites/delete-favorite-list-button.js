@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { deleteFavoriteList } from "@/app/lib/data";
 
-function DeleteFavoriteListButton({ listId, onUpdate }) {
+function DeleteFavoriteListButton({ listId, onUpdate, Icon }) {
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -21,7 +21,8 @@ function DeleteFavoriteListButton({ listId, onUpdate }) {
     };
 
     return (
-        <button onClick={handleDelete} className="btn btn-error btn-sm w-full">
+        <button onClick={handleDelete} className="w-full">
+            <Icon/>
             {loading ? "Excluindo..." : "Excluir Lista"}
         </button>
     );

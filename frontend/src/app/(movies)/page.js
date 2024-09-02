@@ -16,8 +16,9 @@ export default function HomeLayout() {
 
   return (
     <>
-      <FavoritesLink />
-      <SearchBar onSearch={handleSearch} />
+      {/* <FavoritesLink />
+      <SearchBar onSearch={handleSearch} /> */}
+      
       <Title>{searchQuery ? `Resultados da busca para: ${searchQuery}` : "Principais Filmes"}</Title>
       <Suspense fallback={<MovieListSkeleton/>}>
         <MoviesSection searchQuery={searchQuery} />

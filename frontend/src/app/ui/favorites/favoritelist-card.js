@@ -2,13 +2,15 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteFavoriteListButton from "./delete-favorite-list-button";
+import { DotsThree, Trash, LinkSimple } from "@phosphor-icons/react";
+import ShareFavoriteList from "./share-favorite-list";
 
 export default function FavoriteListCard({ favoriteList, onUpdate }) {
   const { name, id, description, movies } = favoriteList;
   const moviePosters = getMoviePosters(movies);
 
   return (
-    <div className="bg-base-100 rounded-md shadow-md grid grid-cols-3 sm:grid-cols-2 relative">
+    <div className="bg-base-200 rounded-md shadow-md grid grid-cols-3 sm:grid-cols-2 relative">
       <ImageStack images={moviePosters} />
       <CardContent 
         name={name} 
@@ -38,7 +40,7 @@ function ImageStack({ images }) {
           height={300}
           src={image ? `https://image.tmdb.org/t/p/original${image}` : '/default-poster.png'}
           alt={`Mosaic Image ${index + 1}`}
-          className="rounded-md object-fill"
+          className="rounded-md object-fill "
         />
       ))}
     </div>
@@ -71,13 +73,17 @@ function CardActions({ listId, onUpdate }) {
 // Component for rendering the dropdown menu
 function DropdownMenu({ listId, onUpdate }) {
   return (
-    <div className="dropdown dropdown-end absolute top-0 right-0">
-      <div tabIndex="0" role="button" className="btn m-1 btn-sm">...</div>
-      <ul tabIndex="0" className="dropdown-content menu bg-base-100 rounded-box z-[99] w-52 p-2 shadow">
-        <li><a>Compartilhar Lista</a></li>
-        <li><a>Editar</a></li>
+    <div className="dropdown dropdown-end absolute top-2 right-2">
+      <div tabIndex="0" role="button" >
+        <DotsThree size={24} weight="bold" />
+      </div>
+      <ul tabIndex="0" className="dropdown-content menu bg-base-200 rounded-box z-[99] w-52 p-2 shadow">
         <li>
-          <DeleteFavoriteListButton listId={listId} onUpdate={onUpdate} />
+          <ShareFavoriteList Icon={LinkSimple} listId={listId}/>
+        </li>
+        {/* <li><a>Editar</a></li> */}
+        <li>
+          <DeleteFavoriteListButton Icon={Trash} listId={listId} onUpdate={onUpdate} />
         </li>
       </ul>
     </div>

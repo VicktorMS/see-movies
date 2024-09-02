@@ -8,7 +8,7 @@ function AddMovieToFavorite({ movie_id }) {
   const [message, setMessage] = useState("");
 
   const handleOpenModal = () => {
-    document.getElementById('my_modal_5').showModal();
+    document.getElementById(movie_id).showModal();
 
     fetchFavoriteLists(setFavoriteLists, setMessage);
   };
@@ -18,7 +18,7 @@ function AddMovieToFavorite({ movie_id }) {
       <button className="absolute right-2 top-2 btn btn-success btn-xs z-30" onClick={handleOpenModal}>
         FAVORITAR
       </button>
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+      <dialog id={movie_id} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Adicionar Filme aos Favoritos</h3>
           <p className="py-4">Selecione uma lista de favoritos para adicionar o filme:</p>

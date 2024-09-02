@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import FavoriteListList from "@/app/ui/favorites/favoritelist-list";
 import { fetchFavoriteLists } from "@/app/lib/data";
-import CreateFavoriteListDrawer from "@/app/ui/favorites/create-favoritelist-drawer";
+import CreateFavoriteListDrawer from "@/app/ui/favorites/create-favoritelist-drawer"; 
 
 export default function FavoriteListSection() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -21,13 +21,7 @@ export default function FavoriteListSection() {
     <>
       {message && <p>{message}</p>}
       <FavoriteListList favoriteLists={favoriteLists} onUpdate={loadFavoriteLists} />
-      <button
-        onClick={() => setIsDrawerOpen(true)}
-        className="btn btn-secondary btn-md text-lg fixed bottom-20 left-6 z-[90]"
-      >
-        + Criar Lista
-      </button>
-      <CreateFavoriteListDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
+      <CreateFavoriteListDrawer onUpdate={loadFavoriteLists}/>
     </>
   );
 }

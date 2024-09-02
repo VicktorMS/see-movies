@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { fetchFavoriteLists } from '@/app/lib/data';
 import FavoriteListAdder from '@/app/ui/movies/favorite-list-adder';
+import { Heart } from '@phosphor-icons/react/dist/ssr';
 
 export default function AddMovieToFavorite({ movie_id }) {
   const [favoriteLists, setFavoriteLists] = useState([]);
@@ -26,8 +27,9 @@ export default function AddMovieToFavorite({ movie_id }) {
 
   return (
     <>
-      <button className="absolute right-2 top-2 btn btn-success btn-xs z-30" onClick={handleOpenModal}>
-        FAVORITAR
+      <button className="absolute right-2 top-2 btn btn-success btn-xs md:sm z-30" onClick={handleOpenModal}>
+        <Heart weight='fill'/>
+        Favoritar
       </button>
       <FavoriteListModal 
         movie_id={movie_id} 

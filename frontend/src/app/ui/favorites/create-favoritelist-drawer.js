@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { createFavoriteList } from '@/app/lib/data';
 import Title from '@/app/ui/title';
-import BottomDrawer from "@/app/ui/bottom-drawer";
+import { Plus } from '@phosphor-icons/react/dist/ssr';
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -12,7 +12,8 @@ const validationSchema = Yup.object().shape({
   description: Yup.string().required('Descrição é obrigatória').min(5, 'A descrição deve ter pelo menos 5 caracteres'),
 });
 
-export default function CreateFavoriteListDrawer({ isOpen, onClose }) {
+export default function CreateFavoriteListDrawer({onUpdate}) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ title: '', description: '' });
   const [errors, setErrors] = useState({});
   const router = useRouter();
@@ -56,8 +57,8 @@ export default function CreateFavoriteListDrawer({ isOpen, onClose }) {
     const result = await createFavoriteList(formData.title, formData.description);
     if (result) {
       resetForm();
-      onClose();
-      router.push(`/favorites/${result.id}/details`);
+      onUpdate();
+      handleCloseModal();
     } else {
       console.log('Error creating the favorite list');
     }
@@ -68,11 +69,28 @@ export default function CreateFavoriteListDrawer({ isOpen, onClose }) {
     setErrors({});
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    document.getElementById("create-list-modal").showModal();
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    document.getElementById("create-list-modal").close();
+  };
+
   return (
-    <BottomDrawer isOpen={isOpen} onClose={onClose}>
-      <Title>Criar Nova Lista de Favoritos</Title>
-      <div className="divider"></div>
-      <form onSubmit={handleSubmit} className="flex flex-col justify-center h-full">
+    <>
+      <button 
+      className="fixed bottom-20 left-6 md:left-auto md:right-6 btn btn-primary z-30" 
+      onClick={handleOpenModal}>
+        <Plus size={24} weight="bold" />
+        Criar Nova Lista
+      </button>
+
+      <CreateFavoriteListModal onClose={handleCloseModal} onSubmit={handleSubmit}>
+        <Title>Criar Nova Lista de Favoritos</Title>
+        <div className="divider"></div>
         <FormInput
           label="Título da Lista de Favoritos"
           name="title"
@@ -89,11 +107,8 @@ export default function CreateFavoriteListDrawer({ isOpen, onClose }) {
           error={errors.description}
           placeholder="Digite a descrição"
         />
-        <button type="submit" className="btn btn-primary mt-4">
-          Criar Lista
-        </button>
-      </form>
-    </BottomDrawer>
+      </CreateFavoriteListModal>
+    </>
   );
 }
 
@@ -114,5 +129,21 @@ function FormInput({ label, name, value, onChange, error, placeholder }) {
       />
       {error && <span className="text-red-500 text-sm">{error}</span>}
     </label>
+  );
+}
+
+function CreateFavoriteListModal({ onClose, onSubmit, children }) {
+  return (
+    <dialog id="create-list-modal" className="modal modal-bottom sm:modal-middle">
+      <div className="modal-box">
+        <form onSubmit={onSubmit} className="flex flex-col justify-center h-full">
+          {children}
+          <div className="modal-action">
+            <button type="button" onClick={onClose} className="btn">Fechar</button>
+            <button type="submit" className="btn btn-primary">Criar Lista</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
   );
 }

@@ -2,6 +2,29 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(() => resolve(), ms));
 }
 
+export async function deleteFavoriteList(listId, setMessage) {
+  try {
+    setMessage("Excluindo...");
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites/${listId}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': '*/*',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao excluir a lista de favoritos");
+    }
+
+    setMessage("Lista de favoritos excluída com sucesso.");
+    return true;
+  } catch (error) {
+    setMessage(error.message);
+    return false;
+  }
+}
+
+
 export async function searchMovies(movieTitle, setMessage) {
   try {
     setMessage("Buscando...");

@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from 'next/link';
+import DeleteFavoriteListButton from './delete-favorite-list-button';
 
-function FavoriteListCard({ favoriteList }) {
+function FavoriteListCard({ favoriteList, onUpdate }) {
   const { name, id, description, movies } = favoriteList;
 
   const movies_posters = movies?.length > 0
@@ -22,7 +23,9 @@ function FavoriteListCard({ favoriteList }) {
             <ul tabIndex="0" className="dropdown-content menu bg-base-100 rounded-box z-[99] w-52 p-2 shadow">
               <li><a>Compartilhar Lista</a></li>
               <li><a>Editar</a></li>
-              <li><a>Excluir</a></li>
+              <li>
+                <DeleteFavoriteListButton listId={id} onUpdate={onUpdate} />
+              </li>
             </ul>
           </div>
           <Link href={`/favorites/${id}/details`} className="btn btn-primary btn-sm md:btn-md">

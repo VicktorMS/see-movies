@@ -3,7 +3,8 @@ import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import Title from "@/app/ui/title";
 import MoviesSection from "@/app/ui/movies/movies-section";
-import SearchBar from "@/app/ui/search-bar"; // Componente da barra de pesquisa
+import SearchBar from "@/app/ui/search-bar"; 
+import BackToTopButton from "@/app/ui/back-to-top-button";
 
 export default function HomeLayout() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,13 +21,14 @@ export default function HomeLayout() {
       <Suspense fallback={<div>Loading...</div>}>
         <MoviesSection searchQuery={searchQuery} />
       </Suspense>
+      <BackToTopButton/>
     </>
   );
 }
 
 function FavoritesLink() {
   return (
-    <Link href={"/favorites"} className="btn btn-primary btn-md text-lg">
+    <Link href={"/favorites"} className="btn btn-primary btn-md text-lg hidden md:block">
       Listas de Favoritos
     </Link>
   );

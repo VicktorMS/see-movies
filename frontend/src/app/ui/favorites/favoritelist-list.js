@@ -1,3 +1,4 @@
+import FavoriteListItemSkeleton from './favoritelist-item-skeleton';
 import FavoriteListCard from './favoritelist-card';
 
 function FavoriteListList({ favoriteLists, onUpdate }) {

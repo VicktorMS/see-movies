@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState, useRef, useCallback, lazy } from "react";
 import { fetchMovies, searchMovies } from "@/app/lib/data";
-import MovieListSkeleton from "../movies/movies-skeleton";
+import MovieListSkeleton from "@/app/ui/movies/movie-list-skeleton";
 
 const MovieList = lazy(() => import('@/app/ui/movies/movie-list'));
 
@@ -53,7 +53,11 @@ export default function MoviesSection({ searchQuery }) {
       {loading && page === 1 ? (
         <MovieListSkeleton />
       ) : (
-        <MovieList movies={movies} lastMovieElementRef={searchQuery ? null : lastMovieElementRef} loading={loading} />
+        <MovieList 
+          movies={movies} 
+          lastMovieElementRef={searchQuery ? null : lastMovieElementRef} 
+          loading={loading} 
+        />
       )}
       {message && <p className="text-center mt-4">{message}</p>}
     </>

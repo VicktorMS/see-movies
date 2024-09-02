@@ -1,5 +1,4 @@
-import React from 'react'
-import MovieCard from './movie-card'
+import MovieCardSkeleton from '@/app/ui/movies/movie-card-skeleton'
 
 function MovieListSkeleton() {
   return (

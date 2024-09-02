@@ -1,6 +1,6 @@
 import React from "react";
 import MovieCard from '@/app/ui/movies/movie-card';
-import MovieCardSkeleton from '@/app/ui/movies/movies-skeleton';
+import MovieCardSkeleton from '@/app/ui/movies/movie-card-skeleton';
 
 export default function MovieList({ movies, lastMovieElementRef, in_favorite_list = false, loading, listId, onMovieRemoved }) {
   return (
@@ -46,9 +46,16 @@ function MovieItem({ movie, index, lastMovieElementRef, moviesLength, in_favorit
 function LoadingSkeletons() {
   return (
     <>
-      {Array.from({ length: 20 }).map((_, index) => (
-        <MovieCardSkeleton key={index} />
-      ))}
+      <MovieCardSkeleton />
+      <MovieCardSkeleton />
+      <MovieCardSkeleton />
+      <MovieCardSkeleton />
+      <MovieCardSkeleton />
+      <MovieCardSkeleton />
+      <MovieCardSkeleton />
+      <MovieCardSkeleton />
+      <MovieCardSkeleton />
+      <MovieCardSkeleton />
     </>
   );
 }

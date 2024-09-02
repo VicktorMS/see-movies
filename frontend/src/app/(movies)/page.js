@@ -5,6 +5,7 @@ import Title from "@/app/ui/title";
 import MoviesSection from "@/app/ui/movies/movies-section";
 import SearchBar from "@/app/ui/search-bar"; 
 import BackToTopButton from "@/app/ui/back-to-top-button";
+import MovieListSkeleton from "@/app/ui/movies/movie-list-skeleton";
 
 export default function HomeLayout() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,7 +19,7 @@ export default function HomeLayout() {
       <FavoritesLink />
       <SearchBar onSearch={handleSearch} />
       <Title>{searchQuery ? `Resultados da busca para: ${searchQuery}` : "Principais Filmes"}</Title>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<MovieListSkeleton/>}>
         <MoviesSection searchQuery={searchQuery} />
       </Suspense>
       <BackToTopButton/>

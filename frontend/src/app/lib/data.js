@@ -93,6 +93,29 @@ export async function fetchMovieDetailsById(id) {
     return response.json();
 };
 
+export async function removeMovieFromFavoriteList(listId, movieId, setMessage) {
+  try {
+    setMessage("Removendo...");
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites/${listId}/remove_movie/?movie_id=${movieId}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': '*/*',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao remover o filme da lista de favoritos");
+    }
+
+    setMessage("Filme removido com sucesso.");
+    return true;
+  } catch (error) {
+    setMessage(error.message);
+    return false;
+  }
+}
+
+
 export async function createFavoriteList(name, description){
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/favorites`; 
     const requestBody = {

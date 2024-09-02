@@ -1,7 +1,7 @@
 import MovieCard from './movie-card';
 import MovieCardSkeleton from '@/app/ui/movies/movies-skeleton';
 
-function MovieList({ movies, lastMovieElementRef, in_favorite_list = false, loading }) {
+function MovieList({ movies, lastMovieElementRef, in_favorite_list = false, loading, listId, onMovieRemoved }) {
   return (
     <div className="movie-list grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
       {movies.map((movie, index) => {
@@ -18,6 +18,8 @@ function MovieList({ movies, lastMovieElementRef, in_favorite_list = false, load
                 vote_average: movie.vote_average,
               }}
               in_favorite_list={in_favorite_list}
+              listId={listId}
+              onMovieRemoved={onMovieRemoved}
             />
           );
         } else {
@@ -32,6 +34,8 @@ function MovieList({ movies, lastMovieElementRef, in_favorite_list = false, load
                 vote_average: movie.vote_average,
               }}
               in_favorite_list={in_favorite_list}
+              listId={listId}
+              onMovieRemoved={onMovieRemoved}
             />
           );
         }

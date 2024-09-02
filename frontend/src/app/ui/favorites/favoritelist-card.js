@@ -46,7 +46,7 @@ function ImageStack({ images }) {
   return (
     <div className="stack">
       {images.map((image, index) => (
-        <img
+        <Image
           key={index}
           width={200}
           height={300}

@@ -10,24 +10,24 @@ export default function MoviesSection({ searchQuery }) {
   const [page, setPage] = useState(1);
   const [message, setMessage] = useState("");
   const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); 
   const initialRender = useRef(true);
 
   useEffect(() => {
     const loadMovies = async () => {
-      setLoading(true);
       const data = searchQuery
         ? await searchMovies(searchQuery, setMessage)
         : await fetchMovies(page, setMessage);
       setMovies(prevMovies => searchQuery ? data.results : [...prevMovies, ...data.results]);
       setHasMore(!searchQuery && data.hasMore);
-      setLoading(false);
+      setLoading(false); 
     };
 
     if (initialRender.current) {
       initialRender.current = false;
       loadMovies();
     } else if (page > 1 || searchQuery) {
+      setLoading(true);
       loadMovies();
     }
   }, [page, searchQuery]);

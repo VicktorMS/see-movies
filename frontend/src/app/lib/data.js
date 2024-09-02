@@ -1,19 +1,25 @@
-import axios from 'axios';
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(() => resolve(), ms));
+}
 
-
-export async function fetchMovies(setMovies, setMessage) {
-    try {
-        setMessage("Carregando...");
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/movies`);
-        if (!response.ok) {
-            throw new Error("Erro ao buscar filmes");
-        }
-        const data = await response.json();
-        setMovies(data.results);
-        setMessage("")
-    } catch (error) {
-        setMessage(error.message);
-    }
+export async function fetchMovies(page = 0, setMessage) {
+  try {
+      setMessage("Carregando...");
+      await sleep(2000);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/movies?page=${page}`);
+      if (!response.ok) {
+          throw new Error("Erro ao buscar filmes");
+      }
+      const data = await response.json();
+      setMessage("");
+      return {
+          results: data.results,
+          hasMore: data.results.length > 0, // Se houver filmes retornados, então há mais páginas
+      };
+  } catch (error) {
+      setMessage(error.message);
+      return { results: [], hasMore: false }; // Retorna um objeto vazio em caso de erro
+  }
 }
 
 export async function fetchFavoriteLists(setFavoriteLists, setMessage) {

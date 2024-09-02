@@ -1,22 +1,27 @@
+import React from "react";
 import Image from "next/image";
 import Link from 'next/link';
 import AddMovieToFavorite from "./add-movie-to-favorite";
 
-function MovieCard({ movie, in_favorite_list = false }) {
+const MovieCard = React.forwardRef(({ movie, in_favorite_list = false }, ref) => {
   const { id, title, overview, posterPath, vote_average } = movie;
 
   return (
-    <div className="relative overflow-hidden">
-      {in_favorite_list ? <button className={in_favorite_list ? 'absolute right-2 top-2 btn btn-error btn-xs z-30' : 'hidden'}>
-        REMOVER
-      </button> : <AddMovieToFavorite movie_id={id}/>}
-      
-      {/* <AddMovieToFavorite/> */}
+    <div ref={ref} className="relative overflow-hidden">
+      {in_favorite_list ? (
+        <button className="absolute right-2 top-2 btn btn-error btn-xs z-30">
+          REMOVER
+        </button>
+      ) : (
+        <AddMovieToFavorite movie_id={id} />
+      )}
       <Link href={`/${id}/details`}>
         <div>
-          <img
+          <Image
             src={posterPath ? posterPath : '/default-poster.png'}
             alt={`${title} Poster`}
+            width={200}
+            height={300}
             className="w-full rounded-lg"
           />
           <div className="pt-4">
@@ -29,6 +34,6 @@ function MovieCard({ movie, in_favorite_list = false }) {
       </Link>
     </div>
   );
-}
+});
 
 export default MovieCard;

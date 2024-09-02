@@ -6,6 +6,7 @@ import FavoriteListList from "../ui/favorites/favoritelist-list";
 import { fetchFavoriteLists } from "../lib/data";
 import { useEffect, useState } from "react";
 import CreateFavoriteListDrawer from "@/app/ui/favorites/create-favoritelist-drawer";
+import Link from "next/link";
 
 
 export default function Page() {
@@ -20,6 +21,7 @@ export default function Page() {
   return (
     <>
       <SearchBar />
+      <Link href={"/"} className="btn btn-primary btn-md text-lg">Descobrir filmes</Link>
       <Title>Seus Filmes Favoritos</Title>
       {message && <p>{message}</p>}
       <FavoriteListList favoriteLists={favoriteList} />

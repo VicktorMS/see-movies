@@ -35,7 +35,7 @@ export default async function Page({ params }) {
           </Link>
         </div>
         {movies.length > 0 ? (
-          <MovieList movies={movies} removable />
+          <MovieList movies={movies} in_favorite_list />
         ) : (
           <p className="text-xl align-middle font-bold text-center">Não há nenhum filme nessa lista de favoritos</p>
         )}

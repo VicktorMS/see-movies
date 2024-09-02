@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from 'next/link';
 
-function MovieCard({ movie, removable = false }) {
+function MovieCard({ movie, in_favorite_list = false }) {
   const { id, title, overview, posterPath, vote_average } = movie;
 
   return (
@@ -9,7 +9,7 @@ function MovieCard({ movie, removable = false }) {
       href={`/${id}/details`}
     >
       <div className="overflow-hidden relative">
-        <button className={removable ? 'absolute right-2 top-2 btn btn-error btn-xs' : `hidden`}>REMOVER</button>
+        <button className={in_favorite_list ? 'absolute right-2 top-2 btn btn-error btn-xs' : `hidden`}>REMOVER</button>
         <img
           src={posterPath ? posterPath : '/default-poster.png'}
           alt={`${title} Poster`}

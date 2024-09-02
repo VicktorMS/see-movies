@@ -1,3 +1,4 @@
+'use client'
 import { fetchFavoriteListDetailsById } from '@/app/lib/data';
 import BackToHome from '@/app/ui/back-to-home';
 import MovieList from '@/app/ui/movies/movie-list';

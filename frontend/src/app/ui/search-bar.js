@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from "react";
+import { MagnifyingGlass } from "@phosphor-icons/react";
 
 export default function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
@@ -12,7 +13,7 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex justify-center mb-4">
+    <form onSubmit={handleSubmit} className="flex justify-center items-center grow h-full">
       <input
         type="text"
         className="input input-bordered w-full max-w-md"
@@ -20,7 +21,9 @@ export default function SearchBar({ onSearch }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button type="submit" className="btn btn-primary ml-2">Buscar</button>
+      <button type="submit" className="btn btn-primary ml-2">
+        <MagnifyingGlass/>
+      </button>
     </form>
   );
 }

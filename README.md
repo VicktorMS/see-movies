@@ -3,6 +3,14 @@
 # See Movies - Teste técnico Verzel
 
 <p align="center">
+  <a href="#tecnologias-utilizadas">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-features">Features</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#licença">Licença</a>
+</p>
+
+<p align="center">
  <img src="https://img.shields.io/static/v1?label=PRs&message=welcome&color=49AA26&labelColor=000000" alt="PRs welcome!" /> 
  <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=49AA26&labelColor=000000" alt="License!" />
 
@@ -12,8 +20,28 @@
 
  Este projeto é uma aplicação fullstack que utiliza FastAPI (Python) no backend, Next.js(React) no frontend, e um banco de dados PostgreSQL. Todo o ambiente está containerizado utilizando Docker e gerenciado via docker-compose.
 
+## Preview do Projeto
+
+## Features
+
+- **Visualização de Filmes em Alta**: Descubra e explore filmes populares e com alta classificação.
+- **Pesquisa de Filmes**: Busque filmes pelo título, facilitando a localização de seus filmes favoritos.
+- **Detalhes de Filmes**: Acesse informações detalhadas sobre cada filme, incluindo sinopse, elenco, e muito mais.
+- **Criação de Listas de Favoritos**: Crie diversas listas de favoritos públicas para organizar seus filmes preferidos, que são armazenadas no banco de dados.
+- **Gerenciamento de Favoritos**: Adicione ou remova filmes de uma lista de favoritos específica, personalizando sua experiência.
+- **Compartilhamento de Links**: Compartilhe facilmente links de listas favoritas e filmes com outras pessoas.
+- **Scroll Infinito**: Navegação contínua e fluida pela lista de filmes, sem necessidade de recarregamento de página.
+- **Responsividade**: Interface adaptável para dispositivos móveis, tablets e desktops, proporcionando uma experiência de usuário consistente.
+- **Documentação Completa da API**: Acesse a documentação Swagger para visualizar e testar os endpoints da API em `/docs`, ou utilize a documentação ReDoc em `/redoc`.
+- **Endpoints Abrangentes**: Mais de 10 endpoints disponíveis para interagir com a API.
+- **Conexão com a API TMDB**: Integração direta com a API do TMDB para obter informações atualizadas sobre filmes.
+- **Testes Unitários**: O backend possui 19 testes unitários, garantindo a qualidade e a estabilidade do código.
+
+
+
+
 ## Tecnologias Utilizadas
-- **Backend:** FastAPI (Python 3.12)
+- **Backend:** FastAPI (Python)
 - **Frontend:** Next.js 14 (React)
 - **Banco de Dados:** PostgreSQL 14
 - **Gerenciador de Pacotes Backend:** Poetry
@@ -24,56 +52,58 @@
 Antes de iniciar, você precisa ter instalado em seu sistema:
 - Docker
 - Docker Compose
+- [Token de API do TMDB](https://developer.themoviedb.org/docs/getting-started)
 
 ## Estrutura do Projeto
-    ```
-    .
-    ├── backend
-    │   ├── app
-    │   │   ├── api
-    │   │   │   └── routes
-    │   │   ├── core
-    │   │   └── services
-    │   ├── Dockerfile
-    │   ├── poetry.lock
-    │   ├── poetry.toml
-    │   ├── pyproject.toml
-    │   ├── README.md
-    │   └── tests
-    │       └── api
-    │           └── routes
-    ├── frontend
-    │   ├── public
-    │   │   ├── default-poster.png
-    │   │   ├── favicon.ico
-    │   │   └── logo.svg
-    |   ├── Dockerfile
-    │   ├── jsconfig.json
-    │   ├── next.config.mjs
-    │   ├── package.json
-    │   ├── .env.local 
-    │   ├── package-lock.json
-    │   ├── postcss.config.mjs
-    │   ├── README.md
-    │   └── src
-    │       └── app
-    │           ├── favorites
-    │           │   └── [id]
-    │           │       └── details
-    │           ├── lib
-    │           ├── (movies)
-    │           │   └── [id]
-    │           │       └── details
-    │           └── ui
-    │               ├── favorites
-    │               ├── globals.css
-    │               ├── layouts
-    │               └── movies
 
-    ├── docker-compose.yml
-    ├── .env < -------------------- Configurações do projeto
-    ├── LICENSE
-    └── README.md
+    ```bash
+        see-movies
+        ├── backend
+        │   ├── app
+        │   │   ├── api
+        │   │   │   └── routes
+        │   │   ├── core
+        │   │   └── services
+        │   ├── Dockerfile
+        │   ├── poetry.lock
+        │   ├── poetry.toml
+        │   ├── pyproject.toml
+        │   ├── README.md
+        │   └── tests
+        │       └── api
+        │           └── routes
+        ├── frontend
+        │   ├── public
+        │   │   ├── default-poster.png
+        │   │   ├── favicon.ico
+        │   │   └── logo.svg
+        |   ├── Dockerfile
+        │   ├── jsconfig.json
+        │   ├── next.config.mjs
+        │   ├── package.json
+        │   ├── .env.local 
+        │   ├── package-lock.json
+        │   ├── postcss.config.mjs
+        │   ├── README.md
+        │   └── src
+        │       └── app
+        │           ├── favorites
+        │           │   └── [id]
+        │           │       └── details
+        │           ├── lib
+        │           ├── (movies)
+        │           │   └── [id]
+        │           │       └── details
+        │           └── ui
+        │               ├── favorites
+        │               ├── globals.css
+        │               ├── layouts
+        │               └── movies
+
+        ├── docker-compose.yml
+        ├── .env < -------------------- Configurações do projeto
+        ├── LICENSE
+        └── README.md
     ```
 ## Configuração
 

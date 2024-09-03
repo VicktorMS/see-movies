@@ -1,15 +1,18 @@
 'use client'
 import React, { useState } from "react";
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MagnifyingGlass, XCircle } from "@phosphor-icons/react";
 
-export default function SearchBar({ onSearch }) {
+export default function SearchBar({ onSearch, onClear }) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (query.trim()) {
-      onSearch(query);
-    }
+    onSearch(query.trim());
+  };
+
+  const handleClear = () => {
+    setQuery("");
+    onClear(); 
   };
 
   return (
@@ -21,8 +24,13 @@ export default function SearchBar({ onSearch }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
+      {query && (
+        <button type="button" onClick={handleClear} className="btn btn-secondary ml-2">
+          <XCircle />
+        </button>
+      )}
       <button type="submit" className="btn btn-primary ml-2">
-        <MagnifyingGlass/>
+        <MagnifyingGlass />
       </button>
     </form>
   );

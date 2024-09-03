@@ -15,10 +15,11 @@ export default function MoviesSection({ searchQuery }) {
 
   useEffect(() => {
     const loadMovies = async () => {
+      setLoading(true);
       const data = searchQuery
         ? await searchMovies(searchQuery, setMessage)
-        : await fetchMovies(page, setMessage);
-      setMovies(prevMovies => searchQuery ? data.results : [...prevMovies, ...data.results]);
+        : await fetchMovies(1, setMessage); 
+      setMovies(searchQuery ? data.results : data.results);
       setHasMore(!searchQuery && data.hasMore);
       setLoading(false); 
     };
@@ -26,11 +27,22 @@ export default function MoviesSection({ searchQuery }) {
     if (initialRender.current) {
       initialRender.current = false;
       loadMovies();
-    } else if (page > 1 || searchQuery) {
-      setLoading(true);
+    } else {
       loadMovies();
     }
-  }, [page, searchQuery]);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (!searchQuery && page > 1) {
+      const loadMoreMovies = async () => {
+        const data = await fetchMovies(page, setMessage);
+        setMovies(prevMovies => [...prevMovies, ...data.results]);
+        setHasMore(data.hasMore);
+        setLoading(false);
+      };
+      loadMoreMovies();
+    }
+  }, [page]);
 
   const observer = useRef();
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { addMovieToFavoriteList } from '@/app/lib/data';
+import { Plus } from '@phosphor-icons/react/dist/ssr';
 
 function FavoriteListAdder({ favoriteList, movie_id }) {
   const [message, setMessage] = useState("");
@@ -15,15 +16,17 @@ function FavoriteListAdder({ favoriteList, movie_id }) {
   };
 
   return (
-    <div className="p-2 border-b">
-      <h4 className="font-bold">{favoriteList.name}</h4>
-      <p className="text-sm text-gray-600">{favoriteList.description}</p>
-      <button 
-        className="btn btn-success btn-xs mt-2"
-        onClick={handleAddMovie}
-      >
-        Adicionar
-      </button>
+    <div className="p-2 border-b border-base-300 px-4 py-2">
+      <div className='flex justify-between items-center '>
+        <h4 className="font-bold">{favoriteList.name}</h4>
+        <button 
+          className="btn btn-success btn-xs mt-2 "
+          onClick={handleAddMovie}
+        >
+          <Plus weight='bold'/>
+          Adicionar
+        </button>
+      </div>
       {message && (
         <p className={`text-sm mt-2 ${isSuccess ? 'text-green-600' : ''}`}>
           {message}

@@ -1,18 +1,40 @@
-"use client"
+"use client";
+
+import { useEffect, useState } from "react";
 import Title from "@/app/ui/title";
 import { fetchMovieDetailsById } from "@/app/lib/data";
 import Link from "next/link";
 import PageBackButton from "@/app/ui/pageback-button";
 import Image from "next/image";
 
-
-export default async function MovieDetailsPage({ params }) {
-  
+// Main component for rendering movie details page
+export default function MovieDetailsPage({ params }) {
   const { id } = params;
-  const movieDetails = await fetchMovieDetails(id);
+  const [movieDetails, setMovieDetails] = useState(null);
+  const [error, setError] = useState(null);
 
-  if (!movieDetails || !movieDetails.title) {
-    return <ErrorState message="Movie not found" />;
+  // Fetch movie details when component mounts
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await fetchMovieDetailsById(id);
+        setMovieDetails(data);
+      } catch (error) {
+        console.error("Failed to fetch movie details:", error);
+        setError("Movie not found");
+      }
+    }
+    fetchData();
+  }, [id]);
+
+  // Render error state if fetching fails
+  if (error) {
+    return <ErrorState message={error} />;
+  }
+
+  // Show loading state while data is being fetched
+  if (!movieDetails) {
+    return <LoadingState />;
   }
 
   return (
@@ -27,27 +49,26 @@ export default async function MovieDetailsPage({ params }) {
   );
 }
 
-// Function to fetch movie details with error handling
-async function fetchMovieDetails(id) {
-  try {
-    return await fetchMovieDetailsById(id);
-  } catch (error) {
-    console.error("Failed to fetch movie details:", error);
-    return null;
-  }
-}
-
-// Component for rendering error states
+// Function to handle error state
 function ErrorState({ message }) {
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <Title>{message}</Title>
-      <Link />
+      <Link href="/">Back to Home</Link>
     </div>
   );
 }
 
-// Component for rendering the movie poster
+// Function to render loading state
+function LoadingState() {
+  return (
+    <div className="p-4 max-w-5xl mx-auto">
+      <Title>Loading...</Title>
+    </div>
+  );
+}
+
+// Component to render the movie poster
 function MoviePoster({ movie }) {
   return (
     <div className="w-full md:w-1/3">
@@ -62,11 +83,11 @@ function MoviePoster({ movie }) {
   );
 }
 
-// Component for rendering basic movie information
+// Component to render basic movie information
 function MovieInfo({ movie }) {
   return (
     <div className="w-full md:w-2/3">
-      <PageBackButton/>
+      <PageBackButton />
       <Title>{movie.title}</Title>
       <p className="text-sm md:text-base mb-4">{movie.tagline}</p>
       <p className="text-sm md:text-base mb-4">{movie.release_date}</p>
@@ -75,12 +96,12 @@ function MovieInfo({ movie }) {
   );
 }
 
-// Component for rendering movie genres
+// Component to render movie genres
 function MovieGenres({ movie }) {
   return (
     <div className="mt-4 flex flex-wrap gap-2">
       {movie.genres.map((genre) => (
-        <span key={genre.id} className="badge badge-lg badge-primary font-bold ">
+        <span key={genre.id} className="badge badge-lg badge-primary font-bold">
           {genre.name}
         </span>
       ))}
@@ -88,31 +109,34 @@ function MovieGenres({ movie }) {
   );
 }
 
-// Component for rendering movie statistics
+// Component to render movie statistics
 function MovieStats({ movie }) {
   return (
     <div className="mt-4">
       <span className="badge badge-neutral badge-lg text-lg py-4 font-semibold">
-        Nota: {movie.vote_average.toFixed(1)}
+        Rating: {movie.vote_average.toFixed(1)}
       </span>
       <div className="mt-4">
         <p className="text-sm md:text-base">
-          <strong>Duração:</strong> {movie.runtime} minutos
+          <strong>Runtime:</strong> {movie.runtime} minutes
         </p>
         <p className="text-sm md:text-base">
-          <strong>Orçamento:</strong> ${movie.budget.toLocaleString()}
+          <strong>Budget:</strong> ${movie.budget.toLocaleString()}
         </p>
         <p className="text-sm md:text-base">
-          <strong>Receita:</strong> ${movie.revenue.toLocaleString()}
+          <strong>Revenue:</strong> ${movie.revenue.toLocaleString()}
         </p>
         <p className="text-sm md:text-base">
-          <strong>Idiomas Falados:</strong> {movie.spoken_languages.map((lang) => lang.english_name).join(", ")}
+          <strong>Spoken Languages:</strong>{" "}
+          {movie.spoken_languages.map((lang) => lang.english_name).join(", ")}
         </p>
         <p className="text-sm md:text-base">
-          <strong>Países de Produção:</strong> {movie.production_countries.map((country) => country.name).join(", ")}
+          <strong>Production Countries:</strong>{" "}
+          {movie.production_countries.map((country) => country.name).join(", ")}
         </p>
         <p className="text-sm md:text-base">
-          <strong>Produtoras:</strong> {movie.production_companies.map((company) => company.name).join(", ")}
+          <strong>Production Companies:</strong>{" "}
+          {movie.production_companies.map((company) => company.name).join(", ")}
         </p>
       </div>
       {movie.homepage && (
@@ -123,7 +147,7 @@ function MovieStats({ movie }) {
             rel="noopener noreferrer"
             className="link link-primary font-bold"
           >
-            Página Oficial
+            Official Page
           </a>
         </div>
       )}

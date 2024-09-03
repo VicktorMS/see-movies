@@ -2,6 +2,7 @@ import Title from "@/app/ui/title";
 import { fetchMovieDetailsById } from "@/app/lib/data";
 import Link from "next/link";
 import PageBackButton from "@/app/ui/pageback-button";
+import Image from "next/image";
 
 
 export default async function MovieDetailsPage({ params }) {
@@ -49,7 +50,9 @@ function ErrorState({ message }) {
 function MoviePoster({ movie }) {
   return (
     <div className="w-full md:w-1/3">
-      <img
+      <Image
+        height={600}
+        width={400}
         src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
         alt={`${movie.title} Poster`}
         className="rounded-lg shadow-lg w-full h-auto"

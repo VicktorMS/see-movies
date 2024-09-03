@@ -1,4 +1,4 @@
-import Header from "./ui/layouts/header";
+import PageHeader from "@/app/ui/layouts/page-header";
 import { Inter } from "next/font/google";
 import "./ui/globals.css";
 import { ToastProvider } from '@/app/ui/toast-context';
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" data-theme="black">
       <body className={`${inter.className}`}>
-        <Header />
+        <PageHeader />
         <ToastProvider>
           <main className="container mx-auto py-6 px-4">
             {children}

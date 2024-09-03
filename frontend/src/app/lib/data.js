@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Base Axios instance
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Accept': 'application/json',
   },

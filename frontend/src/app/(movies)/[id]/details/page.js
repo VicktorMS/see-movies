@@ -1,3 +1,4 @@
+"use client"
 import Title from "@/app/ui/title";
 import { fetchMovieDetailsById } from "@/app/lib/data";
 import Link from "next/link";
@@ -10,7 +11,7 @@ export default async function MovieDetailsPage({ params }) {
   const { id } = params;
   const movieDetails = await fetchMovieDetails(id);
 
-  if (!movieDetails) {
+  if (!movieDetails || !movieDetails.title) {
     return <ErrorState message="Movie not found" />;
   }
 

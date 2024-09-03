@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-function Header() {
+function PageHeader() {
     return (
         <header className="sticky top-0 navbar bg-primary text-primary-content shadow-md p-4 z-50">
             <div className="container mx-auto flex justify-center gap-2 items-center">
@@ -16,4 +16,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default PageHeader;

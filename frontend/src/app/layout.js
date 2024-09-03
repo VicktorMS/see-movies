@@ -1,5 +1,4 @@
 import Header from "./ui/layouts/header";
-import Footer from "./ui/layouts/footer";
 import { Inter } from "next/font/google";
 import "./ui/globals.css";
 import { ToastProvider } from '@/app/ui/toast-context';

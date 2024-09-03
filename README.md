@@ -171,12 +171,5 @@ Antes de iniciar, você precisa ter instalado em seu sistema:
     - Backend: http://localhost:8000
     - Frontend: http://localhost:3000
 
-## Testes Backend e DB
-Para executar os testes, siga os passos abaixo:
-1. Certifique-se de que o container do `backend` e `db` estão em execução.
-2. Execute os testes com o comando:
-    ```bash
-    docker-compose exec backend poetry run pytest
-    ```
 ## Licença
 Este projeto está licenciado sob a [MIT License](./LICENSE). Veja o arquivo `LICENSE` para mais detalhes.

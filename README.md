@@ -20,8 +20,8 @@
 
  Este projeto é uma aplicação fullstack que utiliza FastAPI (Python) no backend, Next.js(React) no frontend, e um banco de dados PostgreSQL. Todo o ambiente está containerizado utilizando Docker e gerenciado via docker-compose.
 
-## Preview do Projeto
-
+## Assista o Preview do Projeto
+[![Watch the video](https://img.youtube.com/vi/TRJj9oaa0rw/maxresdefault.jpg)](https://youtu.be/TRJj9oaa0rw)
 ## Features
 
 - **Visualização de Filmes em Alta**: Descubra e explore filmes populares e com alta classificação.

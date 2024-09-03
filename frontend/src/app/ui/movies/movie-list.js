@@ -29,7 +29,7 @@ function MovieItem({ movie, index, lastMovieElementRef, moviesLength, in_favorit
     movie: {
       id: movie.id,
       title: movie.title,
-      external_id: movie.external_id,
+      external_id: movie.external_id ? movie.external_id : null ,
       overview: movie.overview,
       posterPath: movie.poster_path,
       vote_average: movie.vote_average,

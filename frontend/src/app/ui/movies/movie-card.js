@@ -21,6 +21,9 @@ const MovieCard = React.forwardRef(({ movie, in_favorite_list = false, listId, o
   );
 });
 
+// Definindo o displayName
+MovieCard.displayName = 'MovieCard';
+
 // Component for displaying the favorite action (add or remove)
 function FavoriteAction({ inFavoriteList, movieId, listId, onMovieRemoved }) {
   return inFavoriteList ? (

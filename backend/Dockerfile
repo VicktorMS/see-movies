@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev gcc && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY pyproject.toml poetry.lock /code/
+COPY pyproject.toml /code/
 
 RUN pip install --no-cache-dir poetry && \
     poetry config virtualenvs.create false && \
